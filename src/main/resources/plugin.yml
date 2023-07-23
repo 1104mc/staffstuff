@@ -1,0 +1,7 @@
+name: staffstuff
+version: '${version}'
+main: org._1104mc.staffstuff.Staffstuff
+api-version: '1.20'
+authors: [Peter Horvath]
+description: A staff manager plugin
+website: https://github.com/1104mc/staffstuff
