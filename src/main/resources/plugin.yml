@@ -10,3 +10,5 @@ commands:
     description: Activate your manager roles!
   deactivate:
     description: Deactivate your manager roles!
+  kick:
+    description: Simple kick command! Minimal role is staff!
