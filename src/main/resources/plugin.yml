@@ -8,3 +8,5 @@ website: https://github.com/1104mc/staffstuff
 commands:
   activate:
     description: Activate your manager roles!
+  deactivate:
+    description: Deactivate your manager roles!

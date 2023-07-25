@@ -14,6 +14,7 @@ public final class Staffstuff extends JavaPlugin {
         // Plugin startup logic
         operators = Operator.loadOperators();
         Objects.requireNonNull(getCommand("activate")).setExecutor(new ActivateRoleCommand());
+        Objects.requireNonNull(getCommand("deactivate")).setExecutor(new ActivateRoleCommand());
     }
 
     @Override

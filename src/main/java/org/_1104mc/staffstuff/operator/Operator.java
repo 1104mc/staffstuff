@@ -89,4 +89,20 @@ public class Operator {
     public static boolean isStaff(Player player){
         return staffs.contains(player);
     }
+
+    // Deactivate
+    public void deactivate(Player player){
+        switch (getLevel()){
+            case Staff -> {
+                staffs.remove(player);
+                Component deactivatedText = Component.text("Successfully deactivated your staff role!").color(NamedTextColor.DARK_GREEN);
+                player.sendMessage(deactivatedText);
+            }
+            case Admin -> {
+                player.setOp(false);
+                Component deactivatedText = Component.text("Deactivated your admin role!").color(NamedTextColor.DARK_GREEN);
+                player.sendMessage(deactivatedText);
+            }
+        }
+    }
 }

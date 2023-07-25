@@ -16,11 +16,20 @@ public class ActivateRoleCommand implements CommandExecutor {
         Player player = (Player) sender;
         Operator operator = Operator.findOperator(player.getName());
         if(operator == null){
-            Component activatedText = Component.text("You have no roles to activate!").color(NamedTextColor.DARK_RED);
-            player.sendMessage(activatedText);
+            Component no_permission_message = Component.text("You have no roles to activate/deactivate!").color(NamedTextColor.DARK_RED);
+            player.sendMessage(no_permission_message);
             return false;
         }
-        operator.activate(player);
+        switch (command.getName()){
+            case "activate":
+                operator.activate(player);
+                break;
+            case "deactivate":
+                operator.deactivate(player);
+                break;
+            default:
+                break;
+        }
         return true;
     }
 }
