@@ -30,6 +30,7 @@ public class Operator {
 
     public static Operator[] loadOperators(){
         Staffstuff plugin = JavaPlugin.getPlugin(Staffstuff.class);
+        if(!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdir();
         File operatorFile = new File(plugin.getDataFolder(), "staff.json");
         if(!operatorFile.exists()){
             try {
