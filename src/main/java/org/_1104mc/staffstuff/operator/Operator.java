@@ -23,7 +23,7 @@ public class Operator {
 
     public Operator(JSONObject json){
         this.username = json.getString("username");
-        this.level = OperatorLevel.fromJson("level");
+        this.level = OperatorLevel.fromJson(json.getString("level"));
     }
 
     public String getUsername() {
