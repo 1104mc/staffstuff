@@ -1,6 +1,9 @@
 package org._1104mc.staffstuff.operator;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org._1104mc.staffstuff.Staffstuff;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,15 +12,19 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class Operator {
+    private static ArrayList<Player> staffs = new ArrayList<>();
     private final String username;
     private final OperatorLevel level;
 
     public Operator(JSONObject json){
         this.username = json.getString("username");
-        this.level = OperatorLevel.fromJson("level");
+        this.level = OperatorLevel.fromJson(json.getString("level"));
     }
 
     public String getUsername() {
@@ -28,6 +35,7 @@ public class Operator {
         return level;
     }
 
+    // Loading stuff
     public static Operator[] loadOperators(){
         Staffstuff plugin = JavaPlugin.getPlugin(Staffstuff.class);
         if(!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdir();
@@ -51,6 +59,50 @@ public class Operator {
         } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Failed to load the staffs.json config!");
             return new Operator[]{};
+        }
+    }
+
+    // Activating stuff
+    public static Operator findOperator(String playerName){
+        List<Operator> result = Arrays.stream(Staffstuff.operators.clone())
+                .filter(operator -> Objects.equals(operator.getUsername(), playerName))
+                .toList();
+        return (result.size() > 0) ? result.get(0) : null;
+    }
+
+    public void activate(Player player){
+        switch (getLevel()){
+            case Staff -> {
+                staffs.add(player);
+                Component activatedText = Component.text("Successfully activated your staff role!").color(NamedTextColor.GREEN);
+                player.sendMessage(activatedText);
+            }
+            case Admin -> {
+                player.setOp(true);
+                Component activatedText = Component.text("Activated your admin role!").color(NamedTextColor.GREEN);
+                player.sendMessage(activatedText);
+            }
+        }
+    }
+
+    // Checking staffs
+    public static boolean isStaff(Player player){
+        return staffs.contains(player);
+    }
+
+    // Deactivate
+    public void deactivate(Player player){
+        switch (getLevel()){
+            case Staff -> {
+                staffs.remove(player);
+                Component deactivatedText = Component.text("Successfully deactivated your staff role!").color(NamedTextColor.DARK_GREEN);
+                player.sendMessage(deactivatedText);
+            }
+            case Admin -> {
+                player.setOp(false);
+                Component deactivatedText = Component.text("Deactivated your admin role!").color(NamedTextColor.DARK_GREEN);
+                player.sendMessage(deactivatedText);
+            }
         }
     }
 }

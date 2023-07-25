@@ -5,3 +5,8 @@ api-version: '1.20'
 authors: [Peter Horvath]
 description: A staff manager plugin
 website: https://github.com/1104mc/staffstuff
+commands:
+  activate:
+    description: Activate your manager roles!
+  deactivate:
+    description: Deactivate your manager roles!
