@@ -1,5 +1,6 @@
 package org._1104mc.staffstuff.operator;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org._1104mc.staffstuff.Staffstuff;
 import org.bukkit.entity.Player;
@@ -73,11 +74,13 @@ public class Operator {
         switch (getLevel()){
             case Staff -> {
                 staffs.add(player);
-                player.sendPlainMessage(NamedTextColor.GREEN + "Successfully activated your staff role!");
+                Component activatedText = Component.text("Successfully activated your staff role!").color(NamedTextColor.GREEN);
+                player.sendMessage(activatedText);
             }
             case Admin -> {
                 player.setOp(true);
-                player.sendPlainMessage(NamedTextColor.GREEN + "Activated your admin role!");
+                Component activatedText = Component.text("Activated your admin role!").color(NamedTextColor.GREEN);
+                player.sendMessage(activatedText);
             }
         }
     }

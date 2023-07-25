@@ -1,5 +1,6 @@
 package org._1104mc.staffstuff.commands;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org._1104mc.staffstuff.operator.Operator;
 import org.bukkit.command.Command;
@@ -15,7 +16,8 @@ public class ActivateRoleCommand implements CommandExecutor {
         Player player = (Player) sender;
         Operator operator = Operator.findOperator(player.getName());
         if(operator == null){
-            player.sendPlainMessage(NamedTextColor.DARK_RED + "You have no roles to activate!");
+            Component activatedText = Component.text("You have no roles to activate!").color(NamedTextColor.DARK_RED);
+            player.sendMessage(activatedText);
             return false;
         }
         operator.activate(player);
