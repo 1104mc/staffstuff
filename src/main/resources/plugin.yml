@@ -12,3 +12,7 @@ commands:
     description: Deactivate your manager roles!
   kick:
     description: Simple kick command! Minimal role is staff!
+  timeout:
+    description: Mute players on chat for a specified time. Staff role is the minimun to use this command.
+    aliases:
+      - tm
