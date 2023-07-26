@@ -36,7 +36,7 @@ public class TimeoutedPlayer {
                 continue;
             }
             value += Long.parseLong(part.toString()) * TM_MULTIPLIERS.get(String.valueOf(c));
-            part.delete(0, part.length() - 1);
+            part.delete(0, part.length());
         }
         return value;
     }
@@ -45,16 +45,18 @@ public class TimeoutedPlayer {
 
     public static String timeoutToTimeText(String tmInput){
         long tmValue = timeoutToSeconds(tmInput);
+        List<Long> dividers = TM_MULTIPLIERS.values().stream().sorted().toList();
         StringBuilder outTime = new StringBuilder();
         for (int i = TM_MULTIPLIERS.size()-1; i >= 0; --i) {
-            long divider = TM_MULTIPLIERS.values().stream().toList().get(i);
+            long divider = dividers.get(i);
             long whole_count = tmValue / divider;
             if (whole_count > 0){
                 tmValue -= whole_count * divider;
                 outTime.append(whole_count).append(" ").append(TIME_FIELDS[i]).append(", ");
             }
         }
-        return outTime.toString();
+        String outTimeStr = outTime.toString();
+        return outTimeStr.substring(0, outTimeStr.length()-2);
     }
 
     public boolean isYourPlayer(Player player){
@@ -68,6 +70,6 @@ public class TimeoutedPlayer {
 
     public void unmute(){
         Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO,"Unmuted player"+player.getName());
-        player.sendMessage(Component.text("Lejárt a némításod, mostmár megint használhatod a chatet!"));
+        player.sendMessage(Component.text("Lejárt a némításod, most már megint használhatod a chatet!"));
     }
 }
