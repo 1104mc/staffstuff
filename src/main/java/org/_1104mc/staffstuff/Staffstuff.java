@@ -19,6 +19,7 @@ public final class Staffstuff extends JavaPlugin {
         Objects.requireNonNull(getCommand("kick")).setExecutor(new KickCommand());
         Objects.requireNonNull(getCommand("timeout")).setExecutor(new TimeoutCommand());
         getServer().getPluginManager().registerEvents(new OnChatEvent(), this);
+        TimeoutCommand.startValidator();
     }
 
     @Override

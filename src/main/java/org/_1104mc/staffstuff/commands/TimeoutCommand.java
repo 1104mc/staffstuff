@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class TimeoutCommand extends OperatorCommandExecutor{
     public static ArrayList<TimeoutedPlayer> tmPlayers = new ArrayList<>();
@@ -29,6 +30,7 @@ public class TimeoutCommand extends OperatorCommandExecutor{
         assert target != null;
         target.sendMessage(Component.text("Egy operátor elnémított téged "+tmText+". Ezidő alatt nem fogsz tudni chatelni!", NamedTextColor.RED));
         executor.sendMessage(Component.text("Sikeresen elnémítottad "+target.getName()+" játékost "+tmText+".", NamedTextColor.GREEN));
+        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO, "Player "+target.getName()+"has been muted!");
     }
 
     @Override
@@ -40,7 +42,13 @@ public class TimeoutCommand extends OperatorCommandExecutor{
         new BukkitRunnable() {
             @Override
             public void run() {
-                tmPlayers.removeIf(TimeoutedPlayer::isExpired);
+                tmPlayers.removeIf(timeoutedPlayer -> {
+                    if(timeoutedPlayer.isExpired()){
+                        timeoutedPlayer.unmute();
+                        return true;
+                    }
+                    return false;
+                });
             }
         }.runTaskTimer(Staffstuff.getPlugin(Staffstuff.class), 20L, 20L);
     }

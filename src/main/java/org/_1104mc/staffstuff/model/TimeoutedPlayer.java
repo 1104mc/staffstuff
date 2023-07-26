@@ -1,11 +1,13 @@
 package org._1104mc.staffstuff.model;
 
 import net.kyori.adventure.text.Component;
+import org._1104mc.staffstuff.Staffstuff;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.logging.Level;
 
 public class TimeoutedPlayer {
     private final Player player;
@@ -62,5 +64,10 @@ public class TimeoutedPlayer {
     public boolean isExpired(){
         ZoneOffset zoneOffset = ZoneOffset.of("+1");
         return this.deadline.toInstant(zoneOffset).getEpochSecond() < LocalDateTime.now().toInstant(zoneOffset).getEpochSecond();
+    }
+
+    public void unmute(){
+        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO,"Unmuted player"+player.getName());
+        player.sendMessage(Component.text("Lejárt a némításod, mostmár megint használhatod a chatet!"));
     }
 }
