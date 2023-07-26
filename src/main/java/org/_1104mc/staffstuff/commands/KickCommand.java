@@ -4,10 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org._1104mc.staffstuff.operator.OperatorLevel;
 import org._1104mc.staffstuff.utils.PlayerUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class KickCommand extends OperatorCommandExecutor{
 

@@ -10,6 +10,6 @@ public class PlayerUtil {
         List<? extends Player> players = Bukkit.getOnlinePlayers().stream()
                 .filter(player -> player.getName().equals(playerName))
                 .toList();
-        return (players.size() > 0) ? (Player) players.get(0) : null;
+        return (players.size() > 0) ? players.get(0) : null;
     }
 }

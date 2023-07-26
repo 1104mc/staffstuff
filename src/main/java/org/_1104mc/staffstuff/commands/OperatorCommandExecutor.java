@@ -15,8 +15,7 @@ public abstract class OperatorCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!(sender instanceof Player)) return false;
-        Player player = (Player) sender;
+        if(!(sender instanceof Player player)) return false;
         OperatorLevel playerLevel = OperatorLevel.getPlayerLevel(player);
         if(playerLevel == null || playerLevel.getValue() < getRequiredLevel().getValue()){
             Component noPermissionMessage = Component.text("You have no permission to execute this command!").color(NamedTextColor.DARK_RED);

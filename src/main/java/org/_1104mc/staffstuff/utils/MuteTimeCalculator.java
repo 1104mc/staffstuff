@@ -1,10 +1,7 @@
 package org._1104mc.staffstuff.utils;
 
-import org._1104mc.staffstuff.Staffstuff;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 
 public class MuteTimeCalculator {
 
