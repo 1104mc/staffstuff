@@ -18,6 +18,7 @@ public class SpectatingPlayer {
         this.spectator = spectator;
         this.target = target;
         this.startPos = spectator.getLocation();
+        if(this.target != null) this.spectator.teleport(target);
     }
 
     public Player getTarget() {
@@ -34,5 +35,22 @@ public class SpectatingPlayer {
 
     public boolean isYourPlayer(Player player){
         return player.equals(this.spectator);
+    }
+
+    private double getAxisDistance(double playerPos, double startAxisPos){
+        return Math.abs(playerPos - startAxisPos);
+    }
+
+    public String getLocationInfo(){
+        StringBuilder locationBuilder = new StringBuilder();
+        locationBuilder.append("(");
+        locationBuilder.append(this.startPos.getBlockX()).append(" ")
+                .append(this.startPos.getBlockY()).append(" ")
+                .append(this.startPos.getBlockZ()).append(" ");
+        // Plain distance calculation (Pythagorean theorem: a²+b²=c²)
+        Location currentLocation = this.spectator.getLocation();
+        int distBlock = (int) Math.sqrt(Math.pow(getAxisDistance(currentLocation.getX(), startPos.getX()), 2) + Math.pow(getAxisDistance(currentLocation.getZ(), currentLocation.getZ()), 2));
+        locationBuilder.append("-").append(distBlock).append(" blocks away)");
+        return locationBuilder.toString();
     }
 }
