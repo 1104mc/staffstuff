@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org._1104mc.staffstuff.utils.PlayerUtil.getPlayerChoices;
+
 public class TimeoutTabCompleter implements TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -22,10 +24,6 @@ public class TimeoutTabCompleter implements TabCompleter {
             String timeoutPrompt = args[1];
             return MuteTimeCalculator.offerTimeouts(timeoutPrompt);
         }
-        List<String> playerNames = new ArrayList<>();
-        Stream<? extends Player> players = Bukkit.getOnlinePlayers().stream();
-        if(Bukkit.getOnlinePlayers().size() > 1) players = players.filter(online_player -> !online_player.getName().equals(player.getName()));
-        players.forEach(online_player -> playerNames.add(online_player.getName()));
-        return playerNames;
+        return getPlayerChoices(player);
     }
 }

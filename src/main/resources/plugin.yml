@@ -16,3 +16,5 @@ commands:
     description: Mute players on chat for a specified time. Staff role is the minimun to use this command.
     aliases:
       - tm
+  spectate:
+    description: Spectate what others do. Staff role is the minimum!
