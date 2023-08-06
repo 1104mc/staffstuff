@@ -3,6 +3,7 @@ package org._1104mc.staffstuff.operator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org._1104mc.staffstuff.Staffstuff;
+import org._1104mc.staffstuff.spectate.SpectatorMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.JSONArray;
@@ -92,6 +93,7 @@ public class Operator {
 
     // Deactivate
     public void deactivate(Player player){
+        if(SpectatorMode.isSpectator(player)) SpectatorMode.deactivateSpectator(player, false);
         switch (getLevel()){
             case Staff -> {
                 staffs.remove(player);
