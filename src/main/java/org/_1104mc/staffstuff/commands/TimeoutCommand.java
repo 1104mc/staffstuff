@@ -12,6 +12,7 @@ import org._1104mc.staffstuff.utils.PlayerUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -23,7 +24,7 @@ public class TimeoutCommand extends SubCommandForOperators {
     @SubCommandHandler(id = "add", level = OperatorLevel.Staff)
     public void addTimeout(Player executor, String[] args) {
         if(args.length != 2) {
-            executor.sendMessage(Component.text("Usage: /timeout <player> <time>"));
+            executor.sendMessage(Component.text("Usage: /timeout add <player> <time>"));
             return;
         }
         Player target = PlayerUtil.findPlayer(args[0]);
@@ -56,7 +57,34 @@ public class TimeoutCommand extends SubCommandForOperators {
         executor.sendMessage(outgoingMessage[0]);
     }
 
-    /// TODO: remove subcommand
+    /// remove subcommand
+    @SubCommandHandler(id = "remove", level = OperatorLevel.Admin)
+    public void removeTimeout(Player executor, String[] args){
+        if(args.length == 0){
+            executor.sendMessage(Component.text("Usage: /tm remove <player to unmute>", NamedTextColor.RED));
+            return;
+        }
+        Player target = PlayerUtil.findPlayer(args[0]);
+        if(target == null) {
+            executor.sendMessage(Component.text("Target not found!", NamedTextColor.RED));
+            return;
+        }
+        try {
+            TimeoutedPlayer tm = TimeoutedPlayer.tmPlayers.stream()
+                    .filter(timeout -> timeout.isYourPlayer(target))
+                    .toList().get(0);
+            TimeoutedPlayer.tmPlayers.remove(tm);
+            tm.unmute();
+            executor.sendMessage(Component.text("Successfully removed the timeout from player " + target.getName(), NamedTextColor.GREEN));
+        }catch (IndexOutOfBoundsException e){
+            executor.sendMessage(Component.text("Your target has no active timeouts!", NamedTextColor.RED));
+        }
+    }
+
+    @SubCommandCompleter(subcommand_id = "remove")
+    public List<String> completeRemovePlayer(Player executor, String[] args){
+        return PlayerUtil.getPlayerChoices(executor, false, player -> !TimeoutedPlayer.tmPlayers.stream().filter(tm -> tm.isYourPlayer(player)).toList().isEmpty());
+    }
 
     //// Implemented abstract methods
     @Override

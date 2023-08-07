@@ -31,7 +31,7 @@ public class TimeoutedPlayer {
     }
 
     public void unmute(){
-        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO,"Unmuted player"+player.getName());
+        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO,"Unmuted player "+player.getName());
         player.sendMessage(Component.text("Lejárt a némításod, most már megint használhatod a chatet!"));
     }
 
