@@ -10,14 +10,12 @@ import org._1104mc.staffstuff.utils.PlayerUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import static org._1104mc.staffstuff.utils.PlayerUtil.getPlayerChoices;
 
-public class TimeoutCommand extends OperatorCommand {
-    public static ArrayList<TimeoutedPlayer> tmPlayers = new ArrayList<>();
+public class TimeoutCommand extends SubCommandForOperators {
     @Override
     public void execCommand(Player executor, String[] args) {
         if(args.length != 2) {
@@ -29,7 +27,7 @@ public class TimeoutCommand extends OperatorCommand {
             executor.sendMessage(Component.text("You can mute someone for maximum 2 hour!").color(NamedTextColor.DARK_RED));
             return;
         }
-        tmPlayers.add(new TimeoutedPlayer(target, args[1]));
+        TimeoutedPlayer.tmPlayers.add(new TimeoutedPlayer(target, args[1]));
         String tmText = MuteTimeCalculator.timeoutToTimeText(args[1]);
         assert target != null;
         target.sendMessage(Component.text("Egy operátor elnémított téged "+tmText+". Ezidő alatt nem fogsz tudni chatelni!", NamedTextColor.RED));
@@ -55,7 +53,7 @@ public class TimeoutCommand extends OperatorCommand {
         new BukkitRunnable() {
             @Override
             public void run() {
-                tmPlayers.removeIf(timeoutedPlayer -> {
+                TimeoutedPlayer.tmPlayers.removeIf(timeoutedPlayer -> {
                     if(timeoutedPlayer.isExpired()){
                         timeoutedPlayer.unmute();
                         return true;
