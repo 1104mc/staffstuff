@@ -45,7 +45,7 @@ public abstract class SubCommandForOperators extends OperatorCommand{
         }
 
         public void execute(SubCommandForOperators command, Player executor, String[] args){
-            if(level != null && Objects.requireNonNull(OperatorLevel.getPlayerLevel(executor)).getValue() <= level.getValue()) {
+            if(Objects.requireNonNull(OperatorLevel.getPlayerLevel(executor)).getValue() < level.getValue()) {
                 executor.sendMessage(Component.text("Access denied!", NamedTextColor.DARK_RED));
                 return;
             }
@@ -87,7 +87,7 @@ public abstract class SubCommandForOperators extends OperatorCommand{
                 });
         List<SubCommand> subCommands = new ArrayList<>();
         rawSubCommands.forEach((id, methods) -> {
-            subCommands.add(new SubCommand(methods.get(0), methods.get(1)));
+            subCommands.add(new SubCommand(methods.get(0), (methods.size() == 2) ? methods.get(1) : null));
         });
         return subCommands.toArray(SubCommand[]::new);
     }

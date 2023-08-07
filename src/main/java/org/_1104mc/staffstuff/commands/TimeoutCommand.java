@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import static org._1104mc.staffstuff.utils.PlayerUtil.getPlayerChoices;
 
 public class TimeoutCommand extends SubCommandForOperators {
+    //// Subcommands
+    /// Add subcommand
     @SubCommandHandler(id = "add", level = OperatorLevel.Staff)
     public void addTimeout(Player executor, String[] args) {
         if(args.length != 2) {
@@ -46,11 +48,23 @@ public class TimeoutCommand extends SubCommandForOperators {
         return getPlayerChoices(executor);
     }
 
+    /// list subcommand
+    @SubCommandHandler(id = "list", level = OperatorLevel.Admin)
+    public void listTimeouts(Player executor, String[] args){
+        final Component[] outgoingMessage = {Component.text("The list of current timeouts:").appendNewline()};
+        TimeoutedPlayer.tmPlayers.forEach(tm -> outgoingMessage[0] = outgoingMessage[0].append(tm.toMessage()));
+        executor.sendMessage(outgoingMessage[0]);
+    }
+
+    /// TODO: remove subcommand
+
+    //// Implemented abstract methods
     @Override
     public OperatorLevel getRequiredLevel() {
         return OperatorLevel.Staff;
     }
 
+    //// Other stuff
     public static void startValidator(){
         new BukkitRunnable() {
             @Override

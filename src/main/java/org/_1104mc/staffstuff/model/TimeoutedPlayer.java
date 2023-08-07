@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -35,6 +36,6 @@ public class TimeoutedPlayer {
     }
 
     public Component toMessage(){
-        return Component.text(player.getName() + " - " + deadline.toString());
+        return Component.text(player.getName() + " until " + deadline.format(DateTimeFormatter.ofPattern("H:m:s"))).appendNewline();
     }
 }
