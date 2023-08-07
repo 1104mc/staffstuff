@@ -11,9 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
-public class TimeoutCommand extends OperatorCommandExecutor{
+import static org._1104mc.staffstuff.utils.PlayerUtil.getPlayerChoices;
+
+public class TimeoutCommand extends OperatorCommand {
     public static ArrayList<TimeoutedPlayer> tmPlayers = new ArrayList<>();
     @Override
     public void execCommand(Player executor, String[] args) {
@@ -37,6 +40,15 @@ public class TimeoutCommand extends OperatorCommandExecutor{
     @Override
     public OperatorLevel getRequiredLevel() {
         return OperatorLevel.Staff;
+    }
+
+    @Override
+    public List<String> completeArgs(Player executor, String[] args) {
+        if (args.length == 2) {
+            String timeoutPrompt = args[1];
+            return MuteTimeCalculator.offerTimeouts(timeoutPrompt);
+        }
+        return getPlayerChoices(executor);
     }
 
     public static void startValidator(){
