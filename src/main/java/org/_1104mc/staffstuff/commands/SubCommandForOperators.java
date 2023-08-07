@@ -25,7 +25,7 @@ public abstract class SubCommandForOperators extends OperatorCommand{
 
     @Override
     public List<String> completeArgs(Player executor, String[] args) {
-        if(args.length == 0) return listSubCommands();
+        if(args.length <= 1) return listSubCommands();
         String subCommandId = args[0];
         return completeSubCommand(subCommandId, executor, Arrays.copyOfRange(args, 1, args.length));
     }

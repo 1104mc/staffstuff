@@ -3,6 +3,8 @@ package org._1104mc.staffstuff.commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org._1104mc.staffstuff.Staffstuff;
+import org._1104mc.staffstuff.commands.annotations.SubCommandCompleter;
+import org._1104mc.staffstuff.commands.annotations.SubCommandHandler;
 import org._1104mc.staffstuff.model.TimeoutedPlayer;
 import org._1104mc.staffstuff.operator.OperatorLevel;
 import org._1104mc.staffstuff.utils.MuteTimeCalculator;
@@ -16,8 +18,8 @@ import java.util.logging.Level;
 import static org._1104mc.staffstuff.utils.PlayerUtil.getPlayerChoices;
 
 public class TimeoutCommand extends SubCommandForOperators {
-    @Override
-    public void execCommand(Player executor, String[] args) {
+    @SubCommandHandler(id = "add", level = OperatorLevel.Staff)
+    public void addTimeout(Player executor, String[] args) {
         if(args.length != 2) {
             executor.sendMessage(Component.text("Usage: /timeout <player> <time>"));
             return;
@@ -32,21 +34,21 @@ public class TimeoutCommand extends SubCommandForOperators {
         assert target != null;
         target.sendMessage(Component.text("Egy operátor elnémított téged "+tmText+". Ezidő alatt nem fogsz tudni chatelni!", NamedTextColor.RED));
         executor.sendMessage(Component.text("Sikeresen elnémítottad "+target.getName()+" játékost "+tmText+".", NamedTextColor.GREEN));
-        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO, "Player "+target.getName()+"has been muted!");
+        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO, "Player "+target.getName()+" has been muted!");
     }
 
-    @Override
-    public OperatorLevel getRequiredLevel() {
-        return OperatorLevel.Staff;
-    }
-
-    @Override
-    public List<String> completeArgs(Player executor, String[] args) {
+    @SubCommandCompleter(subcommand_id = "add")
+    public List<String> completeAddTm(Player executor, String[] args) {
         if (args.length == 2) {
             String timeoutPrompt = args[1];
             return MuteTimeCalculator.offerTimeouts(timeoutPrompt);
         }
         return getPlayerChoices(executor);
+    }
+
+    @Override
+    public OperatorLevel getRequiredLevel() {
+        return OperatorLevel.Staff;
     }
 
     public static void startValidator(){
