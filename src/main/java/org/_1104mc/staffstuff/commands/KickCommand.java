@@ -6,7 +6,7 @@ import org._1104mc.staffstuff.operator.OperatorLevel;
 import org._1104mc.staffstuff.utils.PlayerUtil;
 import org.bukkit.entity.Player;
 
-public class KickCommand extends OperatorCommandExecutor{
+public class KickCommand extends OperatorCommand {
 
     @Override
     public void execCommand(Player executor, String[] args) {

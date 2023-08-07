@@ -7,9 +7,12 @@ import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class TimeoutedPlayer {
+    public static ArrayList<TimeoutedPlayer> tmPlayers = new ArrayList<>();
     private final Player player;
     private final LocalDateTime deadline;
 
@@ -28,7 +31,11 @@ public class TimeoutedPlayer {
     }
 
     public void unmute(){
-        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO,"Unmuted player"+player.getName());
+        Staffstuff.getPlugin(Staffstuff.class).getLogger().log(Level.INFO,"Unmuted player "+player.getName());
         player.sendMessage(Component.text("Lejárt a némításod, most már megint használhatod a chatet!"));
+    }
+
+    public Component toMessage(){
+        return Component.text(player.getName() + " until " + deadline.format(DateTimeFormatter.ofPattern("H:m:s"))).appendNewline();
     }
 }
